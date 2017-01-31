@@ -24,7 +24,6 @@ except getopt.GetoptError:
 		" [-r] [-d directory] [-b base-name] [-s start-num]")
 	sys.exit(1)
 
-# parse opts/args
 for opt, arg in opts:
 	# rename flag
 	if opt in "-r":
@@ -42,3 +41,18 @@ for opt, arg in opts:
 	elif opt in "-s":
 		num = int(arg)
 		print("num = " + str(num))
+
+print("")
+
+for filename in os.listdir(filedir):
+	#build new file name
+	ext = os.path.splitext(filename)[1]
+	newname = base + str(num) + ext
+
+	print(filename + " -> " + newname)
+
+	# actually rename if -r set
+	if rename:
+		os.rename(filedir + filename, filedir + newname)
+
+	num += 1
