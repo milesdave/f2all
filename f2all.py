@@ -16,7 +16,7 @@ base = ""
 # file number
 num = 1
 
-# TODO
+# number of zeroes to pad file number with
 pad = 0
 
 # get cmd opts/args
@@ -39,6 +39,8 @@ for opt, arg in opts:
 	# directory argument
 	elif opt in "-d":
 		filedir = arg
+		if not filedir.endswith('/'):
+			filedir += '/'
 	# base name argument
 	elif opt in "-b":
 		base = arg
