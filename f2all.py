@@ -16,16 +16,20 @@ base = ""
 # file number
 num = 1
 
+# TODO
+pad = 0
+
 # get cmd opts/args
 try:
-	opts, args = getopt.getopt(sys.argv[1:], "rd:b:s:")
+	opts, args = getopt.getopt(sys.argv[1:], "rd:b:s:z:")
 except getopt.GetoptError:
 	print("Usage: " + sys.argv[0] +
-		" [-r] [-d directory] [-b base-name] [-s start-num]\n\n"
+		" [-r] [-d directory] [-b base-name] [-s start-num] [-z pad-num]\n\n"
 		"  -r                    perform the renaming\n"
 		"  -d directory          directory of files to rename\n"
 		"  -b base-name          base name for all files to use\n"
-		"  -s start-num          starting file number")
+		"  -s start-num          starting file number\n"
+		"  -z pad-num            number of zeroes to pad file number with")
 	sys.exit(1)
 
 for opt, arg in opts:
@@ -41,6 +45,9 @@ for opt, arg in opts:
 	# starting number argument
 	elif opt in "-s":
 		num = int(arg)
+	# zero padding argument
+	elif opt in "-z":
+		pad = int(arg)
 
 filelist = os.listdir(filedir)
 filelist.sort()
@@ -48,7 +55,7 @@ filelist.sort()
 for filename in filelist:
 	#build new file name
 	ext = os.path.splitext(filename)[1]
-	newname = base + str(num) + ext
+	newname = base + str(num).zfill(pad) + ext
 
 	print(filename + " -> " + newname)
 
