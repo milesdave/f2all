@@ -21,30 +21,31 @@ try:
 	opts, args = getopt.getopt(sys.argv[1:], "rd:b:s:")
 except getopt.GetoptError:
 	print("Usage: " + sys.argv[0] +
-		" [-r] [-d directory] [-b base-name] [-s start-num]")
+		" [-r] [-d directory] [-b base-name] [-s start-num]\n\n"
+		"  -r                    perform the renaming\n"
+		"  -d directory          directory of files to rename\n"
+		"  -b base-name          base name for all files to use\n"
+		"  -s start-num          starting file number")
 	sys.exit(1)
 
 for opt, arg in opts:
 	# rename flag
 	if opt in "-r":
 		rename = True
-		print("raname = True")
 	# directory argument
 	elif opt in "-d":
 		filedir = arg
-		print("filedir = " + filedir)
 	# base name argument
 	elif opt in "-b":
 		base = arg
-		print("base = " + base)
 	# starting number argument
 	elif opt in "-s":
 		num = int(arg)
-		print("num = " + str(num))
 
-print("")
+filelist = os.listdir(filedir)
+filelist.sort()
 
-for filename in os.listdir(filedir):
+for filename in filelist:
 	#build new file name
 	ext = os.path.splitext(filename)[1]
 	newname = base + str(num) + ext
