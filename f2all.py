@@ -21,7 +21,7 @@ num = 1
 pad = 0
 
 # glob pattern
-globstr = ""
+pattern = ""
 
 # get cmd opts/args
 try:
@@ -44,8 +44,6 @@ for opt, arg in opts:
 	# directory argument
 	elif opt in "-d":
 		filedir = arg
-		if not filedir.endswith('/'):
-			filedir += '/'
 	# base name argument
 	elif opt in "-b":
 		base = arg
@@ -57,9 +55,13 @@ for opt, arg in opts:
 		pad = int(arg)
 	# glob argument
 	elif opt in "-g":
-		globstr = arg
+		pattern = arg
 
-filelist = os.listdir(filedir) if not globstr else glob.glob(filedir + globstr)
+# make sure directory ends with a '/'
+if not filedir.endswith('/'):
+	filedir += '/'
+
+filelist = os.listdir(filedir) if not pattern else glob.glob(filedir + pattern)
 filelist.sort()
 
 for filename in filelist:
@@ -71,6 +73,6 @@ for filename in filelist:
 
 	# actually rename if -r set
 	if rename:
-		os.rename(filedir + filename if not globstr else filename, filedir + newname)
+		os.rename(filedir + filename if not pattern else filename, filedir + newname)
 
 	num += 1

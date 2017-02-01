@@ -1,6 +1,6 @@
 # f2all
 
-*A Bulk file renaming script.*
+*A bulk file renaming script.*
 
 ## Usage
 
