@@ -69,10 +69,14 @@ for filename in filelist:
 	ext = os.path.splitext(filename)[1]
 	newname = base + str(num).zfill(pad) + ext
 
+	# remove path from glob output
+	if pattern:
+		filename = filename.split('/')[-1]
+
 	print(filename + " -> " + newname)
 
 	# actually rename if -r set
 	if rename:
-		os.rename(filedir + filename if not pattern else filename, filedir + newname)
+		os.rename(filedir + filename, filedir + newname)
 
 	num += 1
